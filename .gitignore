@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Tests
+.pytest_cache/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Fitted model binaries (not human-readable). Keep *_metrics.json so
+# a reviewer can see both candidates' scores without re-running.
+models/*.joblib

@@ -1,0 +1,44 @@
+{
+  "day": "2026-01-06",
+  "n_rows": 3523,
+  "n_train": 2818,
+  "n_test": 705,
+  "selected_model": "LogisticRegression",
+  "selection_metric": "roc_auc",
+  "candidates": {
+    "LogisticRegression": {
+      "accuracy": 0.7801418439716312,
+      "precision": 0.6043956043956044,
+      "recall": 0.5699481865284974,
+      "f1": 0.5866666666666667,
+      "roc_auc": 0.8215420579663213,
+      "confusion_matrix": [
+        [
+          440,
+          72
+        ],
+        [
+          83,
+          110
+        ]
+      ]
+    },
+    "RandomForestClassifier": {
+      "accuracy": 0.775886524822695,
+      "precision": 0.6011560693641619,
+      "recall": 0.538860103626943,
+      "f1": 0.5683060109289617,
+      "roc_auc": 0.8101724417098446,
+      "confusion_matrix": [
+        [
+          443,
+          69
+        ],
+        [
+          89,
+          104
+        ]
+      ]
+    }
+  }
+}

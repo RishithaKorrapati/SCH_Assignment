@@ -1,0 +1,23 @@
+{
+  "date": "2026-01-10",
+  "input_gate": {
+    "passed": true,
+    "gate": "input",
+    "hard_failures": [],
+    "soft_failures": [],
+    "row_count": 704
+  },
+  "output_gate": {
+    "passed": true,
+    "gate": "output",
+    "hard_failures": [],
+    "soft_failures": [],
+    "row_count": 704
+  },
+  "training": {
+    "trained": true,
+    "skipped": false,
+    "reason": "",
+    "selected_model": "LogisticRegression"
+  }
+}

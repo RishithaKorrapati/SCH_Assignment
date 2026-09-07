@@ -1,0 +1,25 @@
+{
+  "date": "2026-01-04",
+  "input_gate": {
+    "passed": false,
+    "gate": "input",
+    "hard_failures": [
+      "nulls_in_required: gender (1 rows)",
+      "duplicate_customer_id: 1 duplicate row(s)",
+      "monthly_charges_out_of_range: 1 row(s) outside [0.0, 200.0]",
+      "invalid_category_Churn: 1 value(s) not in ['No', 'Yes']",
+      "row_count_below_floor: 50 < 100"
+    ],
+    "soft_failures": [
+      "volume_deviation: today=50 trailing_avg=705.0 ratio=0.07 (allowed [0.5, 1.5])"
+    ],
+    "row_count": 50
+  },
+  "output_gate": null,
+  "training": {
+    "trained": false,
+    "skipped": true,
+    "reason": "2026-01-04: input gate failed, so training will not run",
+    "selected_model": null
+  }
+}

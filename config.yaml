@@ -1,0 +1,101 @@
+paths:
+  bronze_dir: data/bronze
+  quarantine_dir: data/bronze/quarantine   
+  silver_dir: data/silver
+  gold_dir: data/gold
+  reports_dir: reports
+  models_dir: models
+
+# The source CSV has no date column, so we simulate ~10 daily drops.
+simulation:
+  n_days: 10
+  shuffle_seed: 42
+  start_date: "2026-01-01"
+  corrupt_day_index: 3          #2026-01-04 is the deliberately bad batch
+
+input_gate:
+  required_columns:
+    - customerID
+    - gender
+    - SeniorCitizen
+    - Partner
+    - Dependents
+    - tenure
+    - PhoneService
+    - MultipleLines
+    - InternetService
+    - OnlineSecurity
+    - OnlineBackup
+    - DeviceProtection
+    - TechSupport
+    - StreamingTV
+    - StreamingMovies
+    - Contract
+    - PaperlessBilling
+    - PaymentMethod
+    - MonthlyCharges
+    - TotalCharges
+    - Churn
+
+  # Empty-string TotalCharges is allowed (the 11 tenure=0 customers). True missing
+  # values in the other columns below are a hard failure.
+  required_non_null_columns:
+    - customerID
+    - gender
+    - tenure
+    - MonthlyCharges
+    - TotalCharges
+    - Contract
+    - Churn
+
+  tenure_min: 0                 # brand-new customer
+  tenure_max: 72                # 6-year window observed in this product
+  monthly_charges_min: 0.0      # a bill cannot be negative
+  monthly_charges_max: 200.0    # headroom above dataset max 118.75; 9999 still fails
+
+  min_row_count: 100            # ~704 rows/day expected; catastrophic shrink is a hard fail
+
+  volume_trailing_days: 3
+  volume_min_ratio: 0.5         # flag if today < 50% of trailing average
+  volume_max_ratio: 1.5         # flag if today > 150% of trailing average
+
+  categories:
+    gender:
+      - Female
+      - Male
+    Contract:
+      - Month-to-month
+      - One year
+      - Two year
+    InternetService:
+      - DSL
+      - Fiber optic
+      - "No"
+    PaymentMethod:
+      - Bank transfer (automatic)
+      - Credit card (automatic)
+      - Electronic check
+      - Mailed check
+    Churn:
+      - "Yes"
+      - "No"
+
+output_gate:
+  min_row_retention: 0.98       # clean() may drop exact duplicates only
+  cleaned_churn_values: [0, 1]
+  numeric_columns:
+    - tenure
+    - MonthlyCharges
+    - TotalCharges
+    - SeniorCitizen
+
+training:
+  min_gold_rows: 500            # one good day (~704 rows) is enough
+  test_size: 0.2
+  random_state: 42
+  selection_metric: roc_auc
+  logistic_regression:
+    max_iter: 1000
+  random_forest:
+    n_estimators: 100
+    max_depth: 10
